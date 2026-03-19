@@ -518,17 +518,7 @@
   </section>
 
 
-  <section id="why-s1000d" class="border-top border-bottom bg-alt">
-    <div class="container mt-8">
-      <div class="card">
-        <div class="section-eyebrow">Compare structures</div>
-        <h3 class="section-title" style="font-size: 1.45rem;">Traditional manual vs S1000D</h3>
-        <div id="compare-rows" class="stack mt-8"></div>
-      </div>
-    </div>
-  </section>
-
-<section id="concepts" class="border-top border-bottom bg-alt">
+  <section id="concepts" class="border-top border-bottom bg-alt">
     <div class="container">
       <div class="max-3xl">
         <div class="section-eyebrow">Core concepts</div>
@@ -539,7 +529,15 @@
     </div>
   </section>
 
-  
+  <section id="why-s1000d" class="border-top border-bottom bg-alt">
+    <div class="container mt-8">
+      <div class="card">
+        <div class="section-eyebrow">Compare structures</div>
+        <h3 class="section-title" style="font-size: 1.45rem;">Traditional manual vs S1000D</h3>
+        <div id="compare-rows" class="stack mt-8"></div>
+      </div>
+    </div>
+  </section>
 
   <section id="bicycle">
     <div id="bike-examples" style="display:none;"></div>
@@ -855,20 +853,48 @@
     <div class="container">
       <div class="max-3xl">
         <div class="section-eyebrow">BREX</div>
-        <h2 class="section-title">The rulebook for your project</h2>
-        <p class="lead">BREX — Business Rules EXchange — is a special data module that defines how S1000D must be used in a specific project. It is not documentation. It is the set of constraints that all other modules must follow. Click a rule below to see what it looks like in XML and why it exists.</p>
+        <h2 class="section-title">BREX is a separate rule module</h2>
+        <p class="lead">A BREX is not embedded inside the content module. It is its own S1000D data module that the content module refers to. Think of it as the project rule module that tells validation software what is allowed and what is not.</p>
+      </div>
+
+      <div class="card inner-light mt-10">
+        <div class="card-eyebrow">How to read the relationship</div>
+        <div class="two-col-equal" style="display:grid;gap:14px;margin-top:16px;align-items:stretch;">
+          <div class="lesson-detail-box inner-mid">
+            <div class="card-eyebrow">Content data module</div>
+            <div class="text-soft" style="margin-top:8px;">This is the actual maintenance content, such as a bicycle chain inspection procedure.</div>
+            <div class="xml-code" style="padding:16px 18px;margin-top:14px;">
+<pre style="margin:0;font-size:11px;line-height:1.8;">&lt;dataModule&gt;
+  &lt;dmTitle&gt;Inspect the bicycle chain&lt;/dmTitle&gt;
+  &lt;content&gt;...steps and warnings...&lt;/content&gt;
+  &lt;brexDmRef&gt;BREX-BIKE-0001&lt;/brexDmRef&gt;
+&lt;/dataModule&gt;</pre>
+            </div>
+          </div>
+          <div class="lesson-detail-box inner-soft">
+            <div class="card-eyebrow">BREX data module</div>
+            <div class="text-soft" style="margin-top:8px;">This is a separate rule module. It does not contain the maintenance task. It contains validation rules for how project modules must be written.</div>
+            <div class="xml-code" style="padding:16px 18px;margin-top:14px;">
+<pre style="margin:0;font-size:11px;line-height:1.8;">&lt;brexDataModule&gt;
+  &lt;dmTitle&gt;Bicycle project BREX&lt;/dmTitle&gt;
+  &lt;brexDmRuleSpec&gt;...project rules...&lt;/brexDmRuleSpec&gt;
+&lt;/brexDataModule&gt;</pre>
+            </div>
+          </div>
+        </div>
+        <div class="lesson-detail-box inner-light" style="margin-top:14px;display:flex;align-items:center;justify-content:center;text-align:center;">
+          <div class="text-soft"><strong style="color:var(--text);">Content module &gt; refers to &gt; BREX module</strong><br>The content holds the maintenance information. The BREX holds the project rules.</div>
+        </div>
       </div>
 
       <div style="display:grid;gap:14px;margin-top:24px;" class="two-col-equal">
-        <!-- Left: rule list -->
         <div>
-          <div class="card-eyebrow" style="margin-bottom:16px;">Bicycle project BREX rules</div>
+          <div class="card-eyebrow" style="margin-bottom:16px;">Example BREX rules for this bicycle project</div>
           <div id="brex-rule-list" class="stack"></div>
         </div>
-        <!-- Right: XML + explanation -->
         <div id="brex-detail-panel">
-          <div class="lesson-detail-box inner-light" style="height:100%;display:flex;align-items:center;justify-content:center;min-height:160px;">
-            <div style="color:var(--text-muted);font-size:13px;text-align:center;">Select a rule to see the XML and explanation.</div>
+          <div class="lesson-detail-box inner-light" style="height:100%;display:flex;align-items:center;justify-content:center;min-height:200px;">
+            <div style="color:var(--text-muted);font-size:13px;text-align:center;">Select a rule to see the plain-language idea and the BREX XML expression.</div>
           </div>
         </div>
       </div>
@@ -877,16 +903,16 @@
         <div class="card-eyebrow">Why BREX matters</div>
         <div class="lesson-detail-stack" style="margin-top:16px;">
           <div class="lesson-detail-box inner-mid">
-            <div class="card-eyebrow">Projects shape the standard</div>
-            <div class="text-soft">S1000D is intentionally flexible. A helicopter project and a submarine project both use S1000D but may restrict it very differently. BREX is how a project says "from everything the standard allows, here is what we actually use."</div>
+            <div class="card-eyebrow">Business rule > BREX rule</div>
+            <div class="text-soft">A project first decides a business rule in plain language, such as “all modules must use English.” BREX is the machine-readable version of that rule so software can check it consistently.</div>
           </div>
           <div class="lesson-detail-box inner-light">
             <div class="card-eyebrow">Validation tool</div>
             <div class="text-soft">Software can validate every data module in the project against the BREX automatically. Any module that breaks a BREX rule is flagged before it reaches a technician. This prevents errors at the source.</div>
           </div>
           <div class="lesson-detail-box inner-soft">
-            <div class="card-eyebrow">One BREX per project</div>
-            <div class="text-soft">Every module in a project references the same BREX module. This creates a single, controlled source of truth for how the project uses the standard. If a rule changes, it changes in one place.</div>
+            <div class="card-eyebrow">Separate from the content</div>
+            <div class="text-soft">The procedure module and the BREX module are different modules with different jobs. One holds the maintenance content. The other holds the project rule set that the content must follow.</div>
           </div>
         </div>
       </div>
@@ -1955,18 +1981,22 @@
     function renderBrexDetail() {
       const el = document.getElementById("brex-detail-panel");
       if (!activeBrexRule) {
-        el.innerHTML = `<div class="lesson-detail-box inner-light" style="display:flex;align-items:center;justify-content:center;min-height:200px;"><div style="color:var(--text-muted);font-size:14px;text-align:center;">Select a rule to see the XML and explanation.</div></div>`;
+        el.innerHTML = `<div class="lesson-detail-box inner-light" style="display:flex;align-items:center;justify-content:center;min-height:200px;"><div style="color:var(--text-muted);font-size:14px;text-align:center;">Select a rule to see the plain-language idea and the BREX XML expression.</div></div>`;
         return;
       }
       const rule = brexRules.find(r => r.id === activeBrexRule);
       el.innerHTML = `
         <div class="stack">
+          <div class="lesson-detail-box inner-mid">
+            <div class="card-eyebrow">Plain-language project rule</div>
+            <div class="text-soft" style="margin-top:10px;font-size:14px;line-height:1.75;">${rule.summary}</div>
+          </div>
           <div class="xml-code" style="padding:20px 24px;">
-            <div class="card-eyebrow" style="color:#d8b49d;margin-bottom:12px;">BREX rule XML</div>
+            <div class="card-eyebrow" style="color:#d8b49d;margin-bottom:12px;">BREX XML expression</div>
             <pre style="margin:0;font-size:12px;line-height:1.9;">${rule.xml}</pre>
           </div>
           <div class="lesson-detail-box inner-light">
-            <div class="card-eyebrow">Why this rule exists</div>
+            <div class="card-eyebrow">Why the project uses this rule</div>
             <div class="text-soft" style="margin-top:10px;font-size:14px;line-height:1.75;">${rule.why}</div>
           </div>
         </div>
